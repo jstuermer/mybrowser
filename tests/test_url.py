@@ -17,7 +17,13 @@ from url import HostnameError, NetlocError, SchemeError, Url
         ("http://foo.com", does_not_raise()),
         ("http://foo.com/index.html", does_not_raise()),
     ],
-    ids=("invalid-scheme", "missing-hostname", "missing", "valid-url", "valid-url-2"),
+    ids=(
+        "invalid-scheme",
+        "missing-hostname",
+        "invalid-netloc",
+        "valid-url",
+        "valid-url-with-path",
+    ),
 )
 def test_url_creation_raises_for_invalid_input(
     path: str, expected_context: AbstractContextManager
