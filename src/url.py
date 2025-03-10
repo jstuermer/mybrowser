@@ -42,11 +42,11 @@ class Url:
 
     def __init__(self, path: str) -> None:
         """Create an url from the given path."""
-        result: ParseResult = urlparse(path)
+        self.parsed: ParseResult = urlparse(path)
 
-        if result.scheme != "http":
-            raise SchemeError(result.scheme)
-        if result.hostname is None:
-            raise HostnameError(result.hostname)
-        if "." not in result.netloc:
-            raise NetlocError(result.netloc)
+        if self.parsed.scheme != "http":
+            raise SchemeError(self.parsed.scheme)
+        if self.parsed.hostname is None:
+            raise HostnameError(self.parsed.hostname)
+        if "." not in self.parsed.netloc:
+            raise NetlocError(self.parsed.netloc)
