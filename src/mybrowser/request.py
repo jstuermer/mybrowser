@@ -2,7 +2,7 @@
 
 import socket
 
-from url import Url
+from mybrowser.url import Url
 
 
 def request(url: Url) -> None:

@@ -1,7 +1,7 @@
 """Entry point of the browser."""
 
-from request import request
-from url import Url
+from mybrowser.request import request
+from mybrowser.url import Url
 
 
 def main() -> None:

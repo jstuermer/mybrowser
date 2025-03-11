@@ -5,7 +5,7 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
-from url import HostnameError, NetlocError, SchemeError, Url
+from mybrowser.url import HostnameError, NetlocError, SchemeError, Url
 
 
 @pytest.mark.parametrize(
