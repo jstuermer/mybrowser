@@ -1,6 +1,7 @@
 """Url class implementation."""
 
-from typing import Final
+from dataclasses import dataclass
+from typing import Final, Literal
 from urllib.parse import ParseResult, urlparse
 
 
@@ -37,16 +38,34 @@ class NetlocError(Exception):
         super().__init__(self.BASE_MSG + ": " + netloc)
 
 
+@dataclass(frozen=True)
 class Url:
-    """Url type that adheres to some constraints."""
+    """Url type returned by `parse_url`."""
 
-    def __init__(self, path: str) -> None:
-        """Create an url from the given path."""
-        self.parsed: ParseResult = urlparse(path)
+    scheme: Literal["http"]
+    hostname: str
+    netloc: str
+    path: str
 
-        if self.parsed.scheme != "http":
-            raise SchemeError(self.parsed.scheme)
-        if self.parsed.hostname is None:
-            raise HostnameError(self.parsed.hostname)
-        if "." not in self.parsed.netloc:
-            raise NetlocError(self.parsed.netloc)
+
+def parse_url(path: str) -> Url:
+    """Parse a path into a `Url` using `urllib.parse.urlparse` and verify its validity.
+
+    Raises:
+        SchemeError: if the `scheme` is not HTTP
+        HostnameError: if the parsed `hostname` is not a valid string
+        NetlocError: if the parsed `netloc` is not a valid location
+    """
+    result: ParseResult = urlparse(path)
+
+    supported_scheme: Literal["http"] = "http"
+    if result.scheme != supported_scheme:
+        raise SchemeError(result.scheme)
+    if result.hostname is None:
+        raise HostnameError(result.hostname)
+    if "." not in result.netloc:
+        raise NetlocError(result.netloc)
+
+    return Url(
+        scheme=supported_scheme, hostname=result.hostname, netloc=result.netloc, path=result.path
+    )

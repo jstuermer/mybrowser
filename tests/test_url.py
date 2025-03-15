@@ -5,11 +5,11 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
-from mybrowser.url import HostnameError, NetlocError, SchemeError, Url
+from mybrowser.url import HostnameError, NetlocError, SchemeError, parse_url
 
 
 @pytest.mark.parametrize(
-    argnames=("path", "expected_context"),
+    argnames=("path", "expected_behaviour"),
     argvalues=[
         ("foo", pytest.raises(SchemeError, match=SchemeError.BASE_MSG)),
         ("http://", pytest.raises(HostnameError, match=HostnameError.BASE_MSG)),
@@ -25,11 +25,11 @@ from mybrowser.url import HostnameError, NetlocError, SchemeError, Url
         "valid-url-with-path",
     ),
 )
-def test_url_creation_raises_for_invalid_input(
-    path: str, expected_context: AbstractContextManager
+def test_parse_url_raises_for_invalid_input(
+    path: str, expected_behaviour: AbstractContextManager
 ) -> None:
     """Test that creating an url validates data."""
     # ASSERT
-    with expected_context:
+    with expected_behaviour:
         # ACT
-        Url(path)
+        parse_url(path)

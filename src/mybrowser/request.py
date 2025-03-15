@@ -8,4 +8,4 @@ from mybrowser.url import Url
 def request(url: Url) -> None:
     """Connect to the specified url."""
     s = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=socket.IPPROTO_TCP)
-    s.connect((url.parsed.hostname, 80))
+    s.connect((url.hostname, 80))
