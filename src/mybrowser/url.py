@@ -1,41 +1,8 @@
-"""Url class implementation."""
+"""Classes and functions related to URLs."""
 
 from dataclasses import dataclass
 from typing import Final, Literal
 from urllib.parse import ParseResult, urlparse
-
-
-class SchemeError(Exception):
-    """Error raised when an unsupported scheme is encountered in a parsed url."""
-
-    BASE_MSG: Final[str] = "Unsupported url scheme encountered"
-    """Base error message uniquely identifying this error."""
-
-    def __init__(self, scheme: str) -> None:
-        """Create the exception and error message."""
-        super().__init__(self.BASE_MSG + ": " + scheme)
-
-
-class HostnameError(Exception):
-    """Error raised when an unsupported hostname is encountered in a parsed url."""
-
-    BASE_MSG: Final[str] = "Unsupported hostname encountered"
-    """Base error message uniquely identifying this error."""
-
-    def __init__(self, hostname: str | None) -> None:
-        """Create the exception and error message."""
-        super().__init__(self.BASE_MSG + ": " + str(hostname))
-
-
-class NetlocError(Exception):
-    """Error raised when an unsupported netloc is encountered in a parsed url."""
-
-    BASE_MSG: Final[str] = "Unsupported netloc encountered"
-    """Base error message uniquely identifying this error."""
-
-    def __init__(self, netloc: str) -> None:
-        """Create the exception and error message."""
-        super().__init__(self.BASE_MSG + ": " + netloc)
 
 
 @dataclass(frozen=True)
@@ -69,3 +36,33 @@ def parse_url(path: str) -> Url:
     return Url(
         scheme=supported_scheme, hostname=result.hostname, netloc=result.netloc, path=result.path
     )
+
+
+class SchemeError(Exception):
+    """Error raised when an unsupported scheme is encountered in a parsed url."""
+
+    MSG: Final[str] = "Unsupported url scheme encountered"
+
+    def __init__(self, scheme: str) -> None:
+        """Create the exception and error message."""
+        super().__init__(self.MSG + ": " + scheme)
+
+
+class HostnameError(Exception):
+    """Error raised when an unsupported hostname is encountered in a parsed url."""
+
+    MSG: Final[str] = "Unsupported hostname encountered"
+
+    def __init__(self, hostname: str | None) -> None:
+        """Create the exception and error message."""
+        super().__init__(self.MSG + ": " + str(hostname))
+
+
+class NetlocError(Exception):
+    """Error raised when an unsupported netloc is encountered in a parsed url."""
+
+    MSG: Final[str] = "Unsupported netloc encountered"
+
+    def __init__(self, netloc: str) -> None:
+        """Create the exception and error message."""
+        super().__init__(self.MSG + ": " + netloc)

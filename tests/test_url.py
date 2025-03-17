@@ -1,4 +1,4 @@
-"""Unit tests for the url class."""
+"""Unit tests of URL ."""
 
 from contextlib import AbstractContextManager
 from contextlib import nullcontext as does_not_raise
@@ -11,9 +11,9 @@ from mybrowser.url import HostnameError, NetlocError, SchemeError, parse_url
 @pytest.mark.parametrize(
     argnames=("path", "expected_behaviour"),
     argvalues=[
-        ("foo", pytest.raises(SchemeError, match=SchemeError.BASE_MSG)),
-        ("http://", pytest.raises(HostnameError, match=HostnameError.BASE_MSG)),
-        ("http://foo", pytest.raises(NetlocError, match=NetlocError.BASE_MSG)),
+        ("foo", pytest.raises(SchemeError, match=SchemeError.MSG)),
+        ("http://", pytest.raises(HostnameError, match=HostnameError.MSG)),
+        ("http://foo", pytest.raises(NetlocError, match=NetlocError.MSG)),
         ("http://foo.com", does_not_raise()),
         ("http://foo.com/index.html", does_not_raise()),
     ],
